@@ -86,7 +86,7 @@ class DioClient {
 
   Future<HttpClientAdapter> _createHttpClientAdapter() async {
     final List<int> certBytes =
-        await _loadPemCertificate('assets/ssl/mixesfake.pem');
+        await _loadPemCertificate('assets/ssl/mixes.pem');
 
     return IOHttpClientAdapter(
       createHttpClient: () {

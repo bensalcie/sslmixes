@@ -29,55 +29,60 @@ class _MixesPageState extends State<MixesPage> {
         titleSpacing: 20,
       ),
       body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          BlocBuilder<GetMixesBloc, GetMixesState>(
-            builder: (context, state) {
-              if (state is GetMixesFailed) {
-                return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            BlocBuilder<GetMixesBloc, GetMixesState>(
+              builder: (context, state) {
+                if (state is GetMixesFailed) {
+                  return Center(
+                      child: AppTextViewSubtitleSmall(
+                    text: state.errorMessage,
+                    textAlign: TextAlign.center,
+                  ));
+                }
+                if (state is GetMixesLoading) {
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
+                }
+
+                if (state is GetMixesSuccess) {
+                  final mixes = state.result?.mixes ?? [];
+                  return mixes.isNotEmpty
+                      ? GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2),
+                          itemCount: mixes.length,
+                          itemBuilder: (context, index) => SingleMixCard(
+                            mixes: mixes,
+                            index: index,
+                          ),
+                        )
+                      : const Center(
+                          child: AppTextViewSubtitleSmall(
+                            text: 'Nothing yet :)',
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                }
+
+                return const Center(
                     child: AppTextViewSubtitleSmall(
-                  text: state.errorMessage,
+                  text: 'Nothing yet :)',
                   textAlign: TextAlign.center,
                 ));
-              }
-              if (state is GetMixesLoading) {
-                return const Center(
-                    child: CircularProgressIndicator.adaptive());
-              }
-
-              if (state is GetMixesSuccess) {
-                final mixes = state.result?.mixes ?? [];
-                return mixes.isNotEmpty
-                    ? GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2),
-                        itemCount: mixes.length,
-                        itemBuilder: (context, index) => SingleMixCard(
-                          mixes: mixes,
-                          index: index,
-                        ),
-                      )
-                    : const Center(
-                        child: AppTextViewSubtitleSmall(
-                          text: 'Nothing yet :)',
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-              }
-
-              return const Center(
-                  child: AppTextViewSubtitleSmall(
-                text: 'Nothing yet :)',
-                textAlign: TextAlign.center,
-              ));
-            },
-          ),
-          const SizedBox(
-            height: 10,
-          )
-        ]),
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            )
+          ]),
+        ),
       ),
     );
   }

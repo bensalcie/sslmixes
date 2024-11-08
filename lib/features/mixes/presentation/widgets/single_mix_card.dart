@@ -32,14 +32,14 @@ class _SingleMixCardState extends State<SingleMixCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CachedNetworkImage(
-                height: 150,
+                height: 130,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 imageUrl:
                     '$IMAGE_BASE_URL${widget.mixes[widget.index].albumImage}',
                 placeholder: (context, url) => Icon(
                   Icons.image,
-                  size: 150,
+                  size: 10,
                   color: Colors.grey[400],
                 ),
                 errorWidget: (context, url, error) => const Icon(Icons.image),

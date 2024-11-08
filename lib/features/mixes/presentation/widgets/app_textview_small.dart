@@ -30,7 +30,7 @@ class AppTextViewSubtitleSmall extends StatelessWidget {
         onTap != null ? onTap!() : null;
       },
       child: Padding(
-        padding: EdgeInsets.only(left: padding ?? 12),
+        padding: EdgeInsets.only(left: padding ?? 12, top: padding ?? 5),
         child: Text(text,
             textAlign: textAlign,
             maxLines: maxLines,

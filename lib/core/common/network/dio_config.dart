@@ -85,7 +85,7 @@ class DioClient {
   //SSL PINNING ADDITIONS.
   Future<HttpClientAdapter> _createHttpClientAdapter() async {
     final List<int> certBytes =
-        await _loadPemCertificate('assets/ssl/mixes.pem');
+        await _loadPemCertificate('assets/ssl/mixesfake.pem');
 
     return IOHttpClientAdapter(
       createHttpClient: () {

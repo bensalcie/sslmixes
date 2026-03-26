@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sslmixes/features/mixes/data/models/mixes_body.dart';
@@ -13,10 +14,27 @@ class MixesPage extends StatefulWidget {
 }
 
 class _MixesPageState extends State<MixesPage> {
+  final AudioPlayer _player = AudioPlayer();
+
   @override
   void initState() {
     super.initState();
     _fetchMixes();
+  }
+
+  @override
+  void dispose() {
+    _player.dispose(); // Always release resources when the widget is destroyed
+    super.dispose();
+  }
+
+  Future<void> _playFromUrl(String? url) async {
+    // 2. Play using UrlSource
+    if (url != null) {
+      return;
+    }
+
+    await _player.play(UrlSource(url!));
   }
 
   @override
@@ -53,7 +71,6 @@ class _MixesPageState extends State<MixesPage> {
                       ? GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2),
@@ -61,6 +78,9 @@ class _MixesPageState extends State<MixesPage> {
                           itemBuilder: (context, index) => SingleMixCard(
                             mixes: mixes,
                             index: index,
+                            onPlay: (String? url) {
+                              _playFromUrl(url);
+                            },
                           ),
                         )
                       : const Center(

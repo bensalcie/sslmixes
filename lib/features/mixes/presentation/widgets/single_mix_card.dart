@@ -6,14 +6,15 @@ import 'package:sslmixes/features/mixes/data/models/mixes_response.dart';
 import 'package:sslmixes/features/mixes/presentation/widgets/app_textview_small.dart';
 
 class SingleMixCard extends StatefulWidget {
-  const SingleMixCard({
-    super.key,
-    required this.mixes,
-    required this.index,
-  });
+  const SingleMixCard(
+      {super.key,
+      required this.mixes,
+      required this.index,
+      required this.onPlay});
 
   final List<Mixes> mixes;
   final int index;
+  final Function(String?) onPlay;
 
   @override
   State<SingleMixCard> createState() => _SingleMixCardState();
@@ -24,6 +25,7 @@ class _SingleMixCardState extends State<SingleMixCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
+        widget.onPlay(widget.mixes[widget.index].mixFile);
         showAboutDialog(context: context);
       },
       child: Card(
